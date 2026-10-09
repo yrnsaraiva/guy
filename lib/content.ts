@@ -91,7 +91,7 @@ export const EPISODES: Episode[] = [
       "MC PH, MC IG, Nilo MC e MC Ryan SP ao lado de artistas da casa.",
       "A festa sai de Maputo e chega a Nampula.",
     ],
-    feed: ["Brasil × Moçambique", "Maputo e Nampula", "Bailão esgota a pista"],
+    feed: ["Brasil × Moçambique", "Maputo e Nampula", "Funk brasileiro, pista moçambicana"],
     tint: [0.96, 0.84, 0.33],
     shot: "Vídeo vertical do Bailão: público a cantar, câmara no meio da pista",
   },
