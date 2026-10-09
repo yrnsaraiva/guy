@@ -1,121 +1,117 @@
 /**
- * Conteúdo do site "Ao Vivo".
- * Tudo o que está marcado com CONFIRMAR deve ser validado com o Guyzelh antes de publicar.
- * Para trocar um placeholder por media real, preenche `media` (imagem ou vídeo vertical 9:16 em /public).
+ * Conteúdo do site. Tudo o que está marcado com CONFIRMAR deve ser validado com o Guyzelh antes de publicar.
+ * Para usar uma foto real, coloca o ficheiro em /public e preenche `src` (ex.: src: "/retrato.jpg").
  */
 
-export type Media = { type: "image" | "video"; src: string; alt: string };
-
-export type Episode = {
-  id: string;
-  /** Rótulo curto usado na barra de progresso */
-  marker: string;
-  years: string;
-  title: string;
-  lines: string[];
-  /** Mensagens que a régie publica no chat quando o episódio começa */
-  feed: string[];
-  /** Cor que tinge o ring light neste episódio */
-  tint: [number, number, number];
-  /** O que deve aparecer no ecrã vertical — serve de briefing para a produção */
-  shot: string;
-  media?: Media;
-};
+export type Photo = { src?: string; alt: string; note: string };
 
 export const PERSON = {
   name: "Guyzelh Ramos",
-  first: "Guyzelh",
-  last: "Ramos",
+  role: "Empresário, promotor de eventos e criador digital",
+  city: "Maputo, Moçambique",
 };
+
+export const NAV = [
+  { href: "#sobre", label: "Sobre" },
+  { href: "#negocios", label: "Negócios" },
+  { href: "#eventos", label: "Eventos" },
+  { href: "#percurso", label: "Percurso" },
+  { href: "#contacto", label: "Contacto" },
+];
 
 export const HERO = {
-  lines: [
-    "Não é uma biografia.",
-    "É uma transmissão que começou há mais de dez anos e ainda não acabou.",
-  ],
-  hint: "Desliza para ver os episódios",
-  shot: "Retrato vertical do Guyzelh a olhar para a câmara, luz do ring light nos olhos",
-  media: undefined as Media | undefined,
+  title: "Guyzelh Ramos",
+  lead: "Empresário, promotor de eventos e criador digital. Há mais de dez anos a juntar artistas, marcas e público em Moçambique.",
+  photo: { alt: "Retrato de Guyzelh Ramos", note: "Retrato profissional, meio corpo, fundo neutro" } as Photo,
 };
 
-export const EPISODES: Episode[] = [
+/** CONFIRMAR: números e prémios */
+export const FACTS = [
+  { value: "+10 anos", label: "a promover eventos em Moçambique" },
+  { value: "2018", label: "Best Promoter of Africa, Africa Entertainment Awards USA" },
+  { value: "1 milhão", label: "de seguidores no Instagram (2022)" },
+];
+
+export const ABOUT = {
+  title: "Do entretenimento ao negócio",
+  paragraphs: [
+    "Guyzelh Ramos começou como promotor de eventos em Maputo e construiu, ao longo de mais de uma década, uma das marcas pessoais mais reconhecidas do entretenimento moçambicano.",
+    "Durante a pandemia, as suas transmissões em directo passaram a reunir audiências de todo o país. Essa proximidade com o público tornou-se a base do seu trabalho com marcas, das parcerias comerciais e de novos projectos em moda e tecnologia.",
+    "Hoje dedica-se à produção de espectáculos com artistas nacionais e internacionais, sobretudo do Brasil e dos países lusófonos, e ao marketing de influência.",
+  ],
+  photo: { alt: "Guyzelh Ramos em bastidores", note: "Foto em bastidores de um evento, ambiente de trabalho" } as Photo,
+};
+
+export const BUSINESSES = [
   {
-    id: "loja",
-    marker: "2015",
-    years: "2015",
-    title: "A loja",
-    lines: [
-      "Antes das câmaras havia um balcão.",
-      "Em Maputo nasce a Guyzelh Fashion, de roupa e calçado,",
-      "e a primeira regra do negócio: perceber o que as pessoas querem antes de elas o dizerem.",
-    ],
-    feed: ["Maputo, 2015", "Guyzelh Fashion, Lda. registada", "Vestuário e calçado"],
-    tint: [0.91, 0.72, 0.45],
-    shot: "Arquivo da loja: prateleiras, sapatos, o Guyzelh ao balcão",
+    name: "Guyzelh Produções",
+    area: "Eventos e espectáculos",
+    text: "Contratação de artistas, produção e promoção de concertos, em nome próprio ou em parceria com outras produtoras.",
   },
   {
-    id: "palco",
-    marker: "2018",
-    years: "2018",
-    title: "O palco",
-    lines: [
-      "Anos a montar noites antes de alguém as filmar.",
-      "Nos Africa Entertainment Awards USA,",
-      "é distinguido como Best Promoter of Africa.",
-    ],
-    feed: ["Prémio: Best Promoter of Africa", "Africa Entertainment Awards USA", "Moçambique no palco"],
-    tint: [1.0, 0.18, 0.39],
-    shot: "Plano de palco visto de trás: multidão, luzes, o Guyzelh de costas",
+    name: "Bailão",
+    area: "Marca de eventos",
+    text: "Noites dedicadas à música urbana brasileira e a colaborações entre artistas lusófonos, em Maputo e Nampula.",
   },
   {
-    id: "sinal",
-    marker: "2020",
-    years: "2020–2022",
-    title: "O sinal",
-    lines: [
-      "Quando a pandemia fechou as salas, ele abriu a câmara.",
-      "As lives passaram a ser o encontro da noite, e as marcas vieram atrás.",
-      "Em 2021 lança a Gshow: mais de 10 mil inscrições nas primeiras 24 horas.",
-    ],
-    feed: ["Embaixador da Uzeir Trade Center", "Gshow: +10 mil inscrições em 24h", "1 milhão de seguidores no Instagram"],
-    tint: [0.42, 0.48, 1.0],
-    shot: "Gravação de ecrã de uma live antiga, com comentários reais a subir",
+    name: "Marcas e influência",
+    area: "Marketing digital",
+    text: "Campanhas, contratos de embaixador e promoção de produtos junto de uma das maiores audiências digitais do país.",
   },
   {
-    id: "bailao",
-    marker: "2024",
-    years: "2024–2025",
-    title: "Bailão",
-    lines: [
-      "O funk brasileiro encontra a pista moçambicana.",
-      "MC PH, MC IG, Nilo MC e MC Ryan SP ao lado de artistas da casa.",
-      "A festa sai de Maputo e chega a Nampula.",
-    ],
-    feed: ["Brasil × Moçambique", "Maputo e Nampula", "Funk brasileiro, pista moçambicana"],
-    tint: [0.96, 0.84, 0.33],
-    shot: "Vídeo vertical do Bailão: público a cantar, câmara no meio da pista",
-  },
-  {
-    id: "seguir",
-    marker: "A seguir",
-    years: "Em produção",
-    title: "Próximo episódio",
-    lines: [
-      "Novas produções com a Guyzelh Produções,",
-      "uma nova aposta digital",
-      "e o que ainda não se pode dizer em directo. Fica na live.",
-    ],
-    feed: ["Guyzelh Produções", "Próximo episódio em produção", "Fica na live"],
-    tint: [1.0, 0.9, 0.78],
-    shot: "Bastidores de uma produção nova, propositadamente desfocados",
+    name: "Guyzelh Fashion",
+    area: "Moda",
+    text: "Empresa de vestuário e calçado fundada em Maputo em 2015, o primeiro negócio formal do grupo.",
   },
 ];
 
-/** CONFIRMAR: contactos reais do cliente */
-export const CONTACT = {
-  whatsapp: "258000000000",
-  email: "contacto@guyzelh.co.mz",
-  instagram: "https://www.instagram.com/",
+/** CONFIRMAR: datas, locais e artistas de cada evento */
+export const EVENTS = [
+  {
+    title: "Bailão",
+    date: "2024",
+    place: "Maputo",
+    artists: "MC PH e MC IG",
+    photo: { alt: "Público no Bailão 2024", note: "Foto do público ou do palco" } as Photo,
+  },
+  {
+    title: "Bailão",
+    date: "2025",
+    place: "Nampula",
+    artists: "Nilo MC",
+    photo: { alt: "Nilo MC em Nampula", note: "Foto do artista em palco" } as Photo,
+  },
+  {
+    title: "Bailão",
+    date: "2025",
+    place: "Maputo",
+    artists: "MC Ryan SP",
+    photo: { alt: "MC Ryan SP em Maputo", note: "Foto do artista em palco" } as Photo,
+  },
+];
+
+export const TIMELINE = [
+  { year: "2015", title: "Guyzelh Fashion", text: "Funda a empresa de vestuário e calçado em Maputo." },
+  { year: "2018", title: "Best Promoter of Africa", text: "Distinguido nos Africa Entertainment Awards USA." },
+  { year: "2020", title: "Marcas e influência", text: "Torna-se embaixador da Uzeir Trade Center e consolida o trabalho com marcas." },
+  { year: "2021", title: "Aposta no digital", text: "Lança a Gshow, rede social que somou mais de 10 mil inscrições nas primeiras 24 horas." },
+  { year: "2022", title: "1 milhão de seguidores", text: "Atinge um milhão de seguidores no Instagram." },
+  { year: "2024–25", title: "Bailão", text: "Leva artistas brasileiros a Maputo e Nampula." },
+];
+
+export const PARTNERS = {
+  title: "Para marcas e produtoras",
+  text: "Trabalhamos com empresas que querem chegar a um público jovem e envolvido, e com produtoras que procuram um parceiro local para levar artistas ao palco.",
+  services: ["Campanhas e conteúdo patrocinado", "Embaixador de marca", "Patrocínio de eventos", "Co-produção de espectáculos"],
+  /** CONFIRMAR: logótipos autorizados de parceiros */
+  logos: ["Parceiro", "Parceiro", "Parceiro", "Parceiro", "Parceiro"],
 };
 
-export const TOPICS = ["Marcas e parcerias", "Eventos e booking", "Imprensa"] as const;
+/** CONFIRMAR: contactos reais */
+export const CONTACT = {
+  email: "contacto@guyzelh.co.mz",
+  whatsapp: "258000000000",
+  whatsappLabel: "+258 00 000 0000",
+  instagram: "https://www.instagram.com/",
+  topics: ["Parcerias com marcas", "Eventos e booking", "Imprensa", "Outro assunto"],
+};

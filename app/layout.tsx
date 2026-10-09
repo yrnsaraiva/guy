@@ -10,18 +10,18 @@ const archivo = Archivo({
 });
 
 export const metadata: Metadata = {
-  title: "Guyzelh Ramos — Ao vivo",
-  description: "Empresário, promotor de eventos e criador. Uma transmissão em cinco episódios.",
+  title: "Guyzelh Ramos | Empresário e promotor de eventos",
+  description: "Empresário, promotor de eventos e criador digital em Moçambique. Negócios, eventos e parcerias.",
   openGraph: {
-    title: "Guyzelh Ramos — Ao vivo",
-    description: "Uma transmissão em cinco episódios.",
+    title: "Guyzelh Ramos | Empresário e promotor de eventos",
+    description: "Empresário, promotor de eventos e criador digital em Moçambique.",
     locale: "pt_MZ",
     type: "website",
   },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#000000",
+  themeColor: "#ffffff",
   width: "device-width",
   initialScale: 1,
 };
