@@ -147,20 +147,26 @@ h3 { font-size: var(--t-h3); letter-spacing: -0.01em; }
 /* ── Fotos ───────────────────────────────────── */
 .photo { position: relative; overflow: hidden; border-radius: 6px; background: var(--surface); }
 .photo img { width: 100%; height: 100%; object-fit: cover; }
-.photo-placeholder {
+.photo-placeholder-bg {
   position: absolute;
   inset: 0;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  gap: 4px;
-  padding: 20px;
-  font-size: var(--t-s);
-  color: var(--muted);
   background:
     linear-gradient(135deg, transparent 49.6%, var(--line) 49.6%, var(--line) 50.4%, transparent 50.4%),
     var(--surface);
 }
+.section-alt .photo-placeholder-bg { background-color: #e7e8e9; }
+.photo-placeholder {
+  position: absolute;
+  inset: auto 0 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 20px;
+  font-size: var(--t-s);
+  color: var(--muted);
+}
+html.js:not(.rm) [data-reveal="mask"] .photo-placeholder { opacity: 0; transition: opacity 0.6s 0.9s; }
+html.js:not(.rm) [data-reveal="mask"].is-in .photo-placeholder { opacity: 1; }
 .photo-placeholder span { color: var(--ink); font-weight: 600; }
 
 /* ── Hero ────────────────────────────────────── */
@@ -365,3 +371,186 @@ h3 { font-size: var(--t-h3); letter-spacing: -0.01em; }
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: 0.001ms !important; }
 }
+
+/* ═════════════════════════════════════════════
+   Movimento
+   Estados iniciais só existem com JS (html.js) e sem movimento reduzido (html.rm).
+   ═════════════════════════════════════════════ */
+:root {
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-io: cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* ── Preloader ── */
+.preloader { display: none; }
+html.js:not(.rm) .preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: var(--gutter);
+  background: var(--ink);
+  color: #fff;
+  transition: transform 1s var(--ease-io);
+}
+html.js .preloader.is-done { transform: translateY(-100%); }
+.pre-name { font-weight: 600; font-size: var(--t-l); }
+.pre-num {
+  font-size: clamp(5rem, 16vw, 14rem);
+  line-height: 0.8;
+  font-weight: 800;
+  font-variation-settings: "wdth" 78;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+  color: var(--brand);
+}
+html.js:not(.is-loaded):not(.rm) body { overflow: hidden; }
+
+/* ── Texto dividido ── */
+.sw { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.08em; margin-bottom: -0.08em; }
+.sc { display: inline-block; }
+html.js:not(.rm) [data-split] .sc {
+  transform: translateY(110%) rotate(6deg);
+  transform-origin: left bottom;
+  transition: transform 1.1s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 35ms);
+}
+html.js:not(.rm) [data-split="words"] .sc { transition-delay: calc(var(--i, 0) * 70ms); }
+html.js:not(.rm) [data-split].is-in .sc { transform: none; }
+/* o título do hero espera pelo preloader */
+html.js:not(.rm):not(.is-loaded) .hero-title .sc { transform: translateY(110%) rotate(6deg); }
+html.js:not(.rm) .hero-title .sc { transition-duration: 1.2s; transition-delay: calc(0.1s + var(--i, 0) * 40ms); }
+
+.hero-in { transition: opacity 1s var(--ease-out), transform 1s var(--ease-out); transition-delay: var(--d, 0s); }
+html.js:not(.rm):not(.is-loaded) .hero-in { opacity: 0; transform: translateY(24px); }
+
+/* ── Blocos que sobem ── */
+html.js:not(.rm) [data-reveal="up"] {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+}
+html.js:not(.rm) [data-reveal="up"].is-in { opacity: 1; transform: none; }
+
+html.js:not(.rm) [data-stagger] > * {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+  transition-delay: calc(var(--i, 0) * 90ms);
+}
+html.js:not(.rm) [data-stagger].is-in > * { opacity: 1; transform: none; }
+
+/* ── Fotos: máscara + parallax ── */
+.photo-inner { position: absolute; inset: 0; will-change: transform; transform: scale(1.18); }
+html.rm .photo-inner { transform: none; }
+/* a máscara fica no conteúdo (não na moldura) para o IntersectionObserver continuar a ver a moldura */
+html.js:not(.rm) [data-reveal="mask"] { background: transparent; }
+html.js:not(.rm) [data-reveal="mask"] > .photo-inner {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 1.4s var(--ease-io);
+}
+html.js:not(.rm) [data-reveal="mask"].is-in > .photo-inner { clip-path: inset(0 0 0 0); }
+html.js:not(.rm):not(.is-loaded) .hero-photo > .photo-inner { clip-path: inset(100% 0 0 0) !important; }
+html.js:not(.rm) .hero-photo > .photo-inner { transition-delay: 0.25s; }
+
+/* zoom ao passar nos eventos */
+.event .photo-inner > * { transition: transform 1s var(--ease-out); }
+.event:hover .photo-inner > * { transform: scale(1.06); }
+.event h3 { transition: color 0.3s; }
+.event:hover h3 { color: var(--brand-ink); }
+
+/* ── Faixa em movimento ── */
+.marquee {
+  overflow: hidden;
+  padding: clamp(20px, 3vw, 36px) 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  user-select: none;
+}
+.marquee-track { display: flex; width: max-content; will-change: transform; }
+.mq-word {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(20px, 3vw, 44px);
+  padding-right: clamp(20px, 3vw, 44px);
+  font-size: clamp(3rem, 8vw, 7.5rem);
+  line-height: 1;
+  font-weight: 800;
+  font-variation-settings: "wdth" 78;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+}
+.mq-outline { color: transparent; -webkit-text-stroke: 1.5px var(--ink); }
+.mq-dot { width: 0.22em; height: 0.22em; border-radius: 50%; background: var(--brand); flex: none; }
+html.rm .marquee-track { flex-wrap: wrap; width: auto; }
+
+.contact { overflow: hidden; }
+.contact-marquee { margin-top: clamp(64px, 9vw, 120px); }
+.contact-marquee .marquee { border-color: #2a2b2f; }
+.contact-marquee .mq-word { color: #fff; }
+.contact-marquee .mq-outline { color: transparent; -webkit-text-stroke-color: #fff; }
+
+/* ── Linha do tempo que se preenche ── */
+.timeline { position: relative; padding-left: 28px; }
+.timeline::before, .timeline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+}
+.timeline::before { background: #d4d6d9; }
+.timeline::after { background: var(--brand); transform-origin: top; transform: scaleY(var(--progress, 0)); }
+html.rm .timeline::after { transform: none; }
+
+/* ── Cabeçalho que se esconde ── */
+.header { transition: border-color 0.2s, transform 0.5s var(--ease-io); }
+.header.is-hidden { transform: translateY(-100%); }
+
+/* ── Botões ── */
+[data-magnetic] { transition: transform 0.5s var(--ease-out), background-color 0.2s, color 0.2s, border-color 0.2s; }
+
+/* ── Cursor ── */
+.cursor { display: none; }
+html.has-cursor .cursor {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 80;
+  display: grid;
+  place-items: center;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+html.has-cursor .cursor.is-visible { opacity: 1; }
+html.has-cursor .cursor::before {
+  content: "";
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  margin: -5px 0 0 -5px;
+  left: 0; top: 0;
+  border-radius: 50%;
+  background: var(--brand);
+  transition: transform 0.4s var(--ease-out), background-color 0.3s;
+}
+.cursor.is-link::before { transform: scale(4); background: rgb(216 38 47 / 0.18) !important; }
+.cursor.is-label::before { transform: scale(9.6); background: var(--ink) !important; }
+.cursor-label {
+  position: absolute;
+  left: 0; top: 0;
+  transform: translate(-50%, -50%) scale(0.6);
+  color: #fff;
+  font-size: var(--t-s);
+  font-weight: 600;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 0.25s, transform 0.4s var(--ease-out);
+}
+.cursor.is-label .cursor-label { opacity: 1; transform: translate(-50%, -50%) scale(1); }

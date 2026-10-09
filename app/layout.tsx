@@ -28,7 +28,15 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="pt" className={archivo.variable}>
+    <html lang="pt" className={archivo.variable} suppressHydrationWarning>
+      <head>
+        {/* activa os estados iniciais das animações antes de pintar; sem JS o conteúdo fica visível */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `document.documentElement.classList.add('js');if(matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('rm')`,
+          }}
+        />
+      </head>
       <body>{children}</body>
     </html>
   );

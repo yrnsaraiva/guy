@@ -15,6 +15,21 @@ npm run build && npm start
 
 Stack: Next.js 15 (App Router) + React 19 + TypeScript, sem outras dependências.
 
+## Animações
+
+Todas em JS/CSS nativos (`components/Motion.tsx` + fim de `app/globals.css`), ligadas por atributos `data-*`:
+
+- Preloader com contador 000→100 e cortina
+- Título do hero a subir letra a letra; títulos de secção palavra a palavra
+- Fotos reveladas por máscara, com parallax
+- Faixas em movimento (marquee) que aceleram e inclinam com a velocidade do scroll
+- Números que contam (+10 anos, 2018, 1.000.000)
+- Linha do tempo que se preenche em vermelho ao descer
+- Listas em cascata, botões magnéticos, cursor próprio com texto sobre as fotos
+- Menu que se esconde ao descer e volta ao subir
+
+`prefers-reduced-motion` mostra tudo no estado final, sem movimento. Sem JavaScript, o conteúdo aparece normalmente.
+
 ## Estrutura
 
 | Ficheiro | Conteúdo |
@@ -23,6 +38,7 @@ Stack: Next.js 15 (App Router) + React 19 + TypeScript, sem outras dependências
 | `components/Home.tsx` | As secções da página |
 | `components/Header.tsx` | Menu fixo, com menu em ecrã inteiro no mobile |
 | `components/ContactForm.tsx` | Formulário com validação; abre o e-mail com a mensagem preenchida |
+| `components/Motion.tsx` | Todas as animações |
 | `components/Photo.tsx` | Foto real ou espaço reservado com a descrição da foto a colocar |
 | `app/globals.css` | Estilos e tokens de cor |
 

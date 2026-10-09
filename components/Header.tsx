@@ -6,9 +6,19 @@ import { NAV } from "@/lib/content";
 export default function Header() {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [hidden, setHidden] = useState(false);
 
+  // esconde ao descer, volta a aparecer ao subir
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 8);
+    let last = window.scrollY;
+    const onScroll = () => {
+      const y = window.scrollY;
+      setScrolled(y > 8);
+      if (Math.abs(y - last) > 6) {
+        setHidden(y > last && y > 240);
+        last = y;
+      }
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -22,7 +32,7 @@ export default function Header() {
   }, [open]);
 
   return (
-    <header className={`header ${scrolled ? "is-scrolled" : ""}`}>
+    <header className={`header ${scrolled ? "is-scrolled" : ""} ${hidden && !open ? "is-hidden" : ""}`}>
       <div className="container header-inner">
         <a href="#topo" className="logo" aria-label="Guyzelh Ramos, início">
           <span className="logo-mark" aria-hidden="true">GR</span>
@@ -39,7 +49,7 @@ export default function Header() {
               </li>
             ))}
           </ul>
-          <a href="#contacto" className="btn btn-primary nav-cta" onClick={() => setOpen(false)}>
+          <a href="#contacto" className="btn btn-primary nav-cta" data-magnetic onClick={() => setOpen(false)}>
             Falar connosco
           </a>
         </nav>

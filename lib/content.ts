@@ -27,10 +27,13 @@ export const HERO = {
 
 /** CONFIRMAR: números e prémios */
 export const FACTS = [
-  { value: "+10 anos", label: "a promover eventos em Moçambique" },
-  { value: "2018", label: "Best Promoter of Africa, Africa Entertainment Awards USA" },
-  { value: "1 milhão", label: "de seguidores no Instagram (2022)" },
+  { count: 10, from: 0, prefix: "+", suffix: " anos", label: "a promover eventos em Moçambique" },
+  { count: 2018, from: 1990, prefix: "", suffix: "", label: "Best Promoter of Africa, Africa Entertainment Awards USA", plain: true },
+  { count: 1000000, from: 0, prefix: "", suffix: "", label: "seguidores no Instagram (2022)" },
 ];
+
+/** Palavras da faixa em movimento */
+export const MARQUEE = ["Eventos", "Marcas", "Moda", "Digital", "Maputo", "Nampula"];
 
 export const ABOUT = {
   title: "Do entretenimento ao negócio",
